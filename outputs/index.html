@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f7f8f5"><title>Studywise · Study Companion</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-mark">s</span><span>studywise</span></a>
+    <p class="side-label">YOUR SPACE</p>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="nav-item active" data-view="home"><span>⌂</span>Overview</button>
+      <button class="nav-item" data-view="learn"><span>◉</span>Learn</button>
+      <button class="nav-item" data-view="revision"><span>▤</span>Quick revision</button>
+      <button class="nav-item" data-view="progress"><span>◷</span>My progress</button>
+    </nav>
+    <div class="divider"></div>
+    <div class="side-heading"><span>MY STUDY PATHS</span><button id="sideAdd" class="icon-button" aria-label="Add a study path">＋</button></div>
+    <div id="courseList" class="course-list"></div>
+    <div class="side-foot"><span>✦</span><div><b>Small steps add up.</b><small>Keep your learning streak going.</small></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar"><div class="crumb">Your learning space <span>/</span> <b id="crumbPage">Overview</b></div><div class="top-actions"><span id="tutorStatus" class="tutor-status connected">Offline study tools · no API key</span><span id="today" class="today"></span><span class="avatar">S</span></div></header>
+
+    <section id="homeView" class="view active-view">
+      <div class="welcome"><div><p class="eyebrow">YOUR PERSONAL STUDY SPACE</p><h1>Learn at your own pace<span class="green">.</span></h1><p class="muted">Upload your material. Your tutor will help you understand it, one topic at a time.</p></div><button id="uploadTop" class="button primary">＋ Add study material</button></div>
+      <div class="stats"><article class="stat"><small>YOUR STREAK</small><strong><span id="streak">1</span> <em>day</em></strong><span>A little learning every day</span></article><article class="stat"><small>TOPICS MASTERED</small><strong><span id="mastered">0</span> <em id="topicTotal">of 0 topics</em></strong><span>Keep building your understanding</span></article><article class="stat"><small>LEARNING TIME</small><strong><span id="minutes">0</span> <em>min</em></strong><span>Time spent learning</span></article></div>
+      <div class="home-grid"><section class="panel continue"><div class="section-head"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2>Continue learning</h2></div><button class="text-button" data-go="learn">Go to Learn →</button></div><div id="continueCard"></div></section><section class="panel reminder"><p class="eyebrow">A GENTLE REMINDER</p><h2>Progress,<br>not perfection.</h2><p>Stay with each topic until the main ideas feel clear.</p></section></div>
+      <section class="panel path-panel"><div class="section-head"><div><p class="eyebrow">YOUR LEARNING PATH</p><h2 id="courseTitle">Upload material to begin</h2></div><div class="path-actions"><select id="courseSelect" aria-label="Switch study path"></select><button id="addTopicButton" class="button light">＋ Add a topic here</button></div></div><div id="topicList" class="topic-list"></div></section>
+    </section>
+
+    <section id="learnView" class="view"><div class="page-intro"><p class="eyebrow">LEARN</p><h1 id="learnTitle">Your study path</h1><p class="muted">Local study aids reorganize your extracted notes. They don’t add knowledge beyond the source.</p></div><div class="learn-grid"><aside class="panel topic-rail"><p class="eyebrow">YOUR TOPICS</p><div id="lessonTopics"></div><div class="rail-tip">✦ <span>Master this topic to unlock the next one.</span></div></aside><article id="lessonContent" class="panel lesson"></article></div></section>
+
+    <section id="revisionView" class="view"><div class="page-intro"><p class="eyebrow">QUICK REVISION</p><h1>Refresh your memory<span class="green">.</span></h1><p class="muted">Practise recall with flashcards, then see how the ideas connect.</p></div><section id="revisionWorkspace" class="panel revision-workspace" hidden></section><div id="revisionCards" class="revision-grid"></div></section>
+
+    <section id="progressView" class="view"><div class="page-intro"><p class="eyebrow">YOUR PROGRESS</p><h1>Look how far you’ve come<span class="green">.</span></h1><p class="muted">Your progress is saved in this browser.</p><div class="data-tools"><button id="exportProgress" class="button light">Export progress</button><label class="button light import-button">Import progress<input id="importProgress" type="file" accept="application/json,.json"></label></div></div><div class="progress-grid"><section class="panel progress-overview"><p class="eyebrow">MASTERY OVERVIEW</p><div class="big-progress"><strong id="progressPercent">0%</strong><span><b>overall progress</b><small id="progressCaption">Your learning journey starts here.</small></span></div><div class="progress-bar large"><i id="overallBar"></i></div><div class="progress-stats"><span><b id="pMastered">0</b><small>Mastered</small></span><span><b id="pActive">0</b><small>In progress</small></span><span><b id="pLocked">0</b><small>To explore</small></span></div></section><section class="panel"><p class="eyebrow">TOPIC BY TOPIC</p><h2>Your learning path</h2><div id="progressTopics"></div></section></div></section>
+  </main>
+</div>
+
+<dialog id="uploadDialog" class="modal"><form method="dialog"><button class="close" aria-label="Close">×</button></form><p class="eyebrow">CREATE A SEPARATE STUDY PATH</p><h2>Bring in something new</h2><p class="muted">Each upload starts its own path. Your other subjects and progress stay as they are.</p><label id="dropZone" class="drop-zone"><input id="fileInput" type="file" accept="application/pdf,.txt,.md"><span class="upload-symbol">↑</span><strong>Drop a PDF or text file, or <u>browse</u></strong><small>Text-based PDF, TXT, or Markdown · read in your browser</small></label><div id="uploadStatus" class="upload-status" aria-live="polite"></div><div class="or"><span></span>or start a separate topic<span></span></div><div class="manual-row"><input id="manualCourse" placeholder="e.g. Photosynthesis" maxlength="70"><button id="createManual" class="button primary">Create path</button></div><p class="privacy">Your study tools are generated in your browser from the extracted text. No API key or account is used.</p></dialog>
+
+<dialog id="topicDialog" class="modal"><form method="dialog"><button class="close" aria-label="Close">×</button></form><p class="eyebrow">ADD TO THIS STUDY PATH</p><h2>Add a topic</h2><p class="muted">Paste notes or key ideas so the tutor can teach from your source.</p><input id="topicName" class="field" placeholder="Topic name" maxlength="70"><textarea id="topicNotes" class="field" rows="5" placeholder="Paste notes or key ideas"></textarea><button id="saveTopic" class="button primary full">Add topic</button></dialog>
+
+<dialog id="quizDialog" class="modal quiz-modal"><form method="dialog"><button class="close" aria-label="Close">×</button></form><div id="quizBody"></div></dialog>
+
+<div id="toast" class="toast" role="status"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="app.js"></script>
+</body>
+</html>
